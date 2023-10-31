@@ -1,4 +1,4 @@
-import {ISkin} from "../models/skin";
+import {ISkin} from "../models/skin.model";
 import fs from "fs";
 
 export const getSkinsFromFile = (): ISkin[] => {

@@ -14,6 +14,6 @@ const skinSchema = new mongoose.Schema({
     color: { type: String, required: true }
 });
 
-const Skin = mongoose.model<ISkin>('Skin', skinSchema);
+const SkinModel = mongoose.model<ISkin>('Skin', skinSchema);
 
-export { Skin, ISkin };
+export { SkinModel, ISkin };
