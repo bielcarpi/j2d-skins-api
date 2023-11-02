@@ -14,6 +14,12 @@ export const getAvailableSkins = async (req: Request, res: Response) => {
 
 export const buySkin = async (req: Request, res: Response) => {
     const {skinId} = req.body;
+
+    // Validate user input
+    if (!skinId) {
+        return res.status(400).send("All input is required");
+    }
+
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
     const userId = req.user.id;
 
@@ -72,6 +78,12 @@ export const getMySkins = async (req: Request, res: Response) => {
 
 export const changeSkinColor = async (req: Request, res: Response) => {
     const {userSkinId, newColor} = req.body;
+
+    // Validate user input
+    if (!(userSkinId && newColor)) {
+        return res.status(400).send("All input is required");
+    }
+
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
     const userId = req.user.id;
 
@@ -96,6 +108,12 @@ export const changeSkinColor = async (req: Request, res: Response) => {
 
 export const deleteSkin = async (req: Request, res: Response) => {
     const {userSkinId} = req.body;
+
+    // Validate user input
+    if (!userSkinId) {
+        return res.status(400).send("All input is required");
+    }
+
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
     const userId = req.user.id;
 
@@ -117,6 +135,11 @@ export const deleteSkin = async (req: Request, res: Response) => {
 
 export const getSkin = async (req: Request, res: Response) => {
     const {skinId} = req.body;
+
+    // Validate user input
+    if (!skinId) {
+        return res.status(400).send("All input is required");
+    }
 
     try {
         const skin = await SkinModel.findById(skinId);

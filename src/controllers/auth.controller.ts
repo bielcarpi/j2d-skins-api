@@ -11,7 +11,10 @@ const generateToken = (id: string) => {
         process.exit(1);
     }
 
-    return jwt.sign(id, secret, {expiresIn: '1h'});
+    const payload = {
+        userId: id
+    };
+    return jwt.sign(payload, secret, {expiresIn: '1h'});
 };
 
 
@@ -19,6 +22,11 @@ export const register = async (req: Request, res: Response) => {
     try {
         // Get user input
         const {username, password} = req.body;
+
+        // Validate user input
+        if (!(username && password)) {
+            return res.status(400).send("All input is required");
+        }
 
         // Check if user already exists
         const oldUser = await User.findOne({username});
@@ -42,10 +50,7 @@ export const register = async (req: Request, res: Response) => {
 
         // Return new user
         res.status(201).json({
-            userDetails: {
-                username: user.username,
-                token: token,
-            },
+            token: token,
         });
     } catch (err) {
         res.status(500).send("Error in Saving");
@@ -59,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
 
         // Validate user input
         if (!(username && password)) {
-            res.status(400).send("All input is required");
+            return res.status(400).send("All input is required");
         }
 
         // Validate if user exist in our database
@@ -70,8 +75,7 @@ export const login = async (req: Request, res: Response) => {
             // Create token to send back for authentication
             const token = generateToken(user.id);
 
-            res.status(200).json({
-                username: user.username,
+            return res.status(200).json({
                 token: token,
             });
         }
