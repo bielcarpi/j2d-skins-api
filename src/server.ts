@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(passport.initialize());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/skins', passport.authenticate('jwt', { session: false }), skinRoutes);
+app.use(authRoutes);
+app.use('/skins', passport.authenticate('jwt', { session: false }), skinRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
