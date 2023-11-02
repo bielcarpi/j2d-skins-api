@@ -12,7 +12,7 @@ const generateToken = (id: string) => {
     }
 
     const payload = {
-        userId: id
+        sub: id
     };
     return jwt.sign(payload, secret, {expiresIn: '1h'});
 };
