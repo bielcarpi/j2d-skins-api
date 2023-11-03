@@ -21,6 +21,7 @@
 API de Skins para Jump2Digital. Desarrollada con Node.js y TypeScript, y contenerizada con Docker para una implementación sencilla y eficiente.
 </p>
 
+<br>
 
 ## Instrucciones de Despliegue
 Para desplegar la API, asegúrate de tener Docker y Docker Compose instalados en tu sistema. Una vez instalados, puedes clonar el repositorio y construir el proyecto con el siguiente comando:
@@ -29,7 +30,7 @@ docker-compose up --build
 ```
 
 <br>
-El proyecto se desplegará en el puerto 3000 de tu máquina local, y ya podrás puedes hacer peticiones (asegúrate de incluir los parámetros necesarios en el cuerpo de la petición, y el bearer token en caso de que sea necesario).
+El proyecto se desplegará en el puerto 3000 de tu máquina local, y ya podrás hacer peticiones (asegúrate de incluir los parámetros necesarios en el cuerpo de la petición, y el bearer token en caso de que sea necesario).
 
 
 ## Modelo de Skin
@@ -57,11 +58,12 @@ La API está configurada para interactuar con una base de datos MongoDB, donde s
 
 Docker Compose se encarga de crear un contenedor de MongoDB y vincularlo con el contenedor de la API. La base de datos se inicializa con datos de prueba al construir el proyecto (del fichero `db.json`).
 
-Al desplegar la API, se crean un usuario de prueba (`mongo-init.js`):
+Al desplegar la API, se crea un usuario de prueba (`mongo-init.js`):
 ```json
 {
-    "username": "admin",
-    "password": "admin"
+  "url": "mongodb://mongo:27017/j2d-skins-api",
+  "username": "admin",
+  "password": "admin"
 }
 ```
 
@@ -88,7 +90,7 @@ La API proporciona los siguientes endpoints para la gestión de skins:
 
 <br>
 
-Las dos rutas de autenticación devuelven un token JWT que debe ser incluido en el encabezado de las peticiones a los endpoints siguientes.
+Las dos rutas de autenticación devuelven un token JWT que debe ser incluido en el encabezado de las peticiones a los endpoints siguientes (bearer token).
 
 
 ### Skins
@@ -128,3 +130,8 @@ Las dos rutas de autenticación devuelven un token JWT que debe ser incluido en 
 
 ## Autor
 Biel Carpi ([biel.carpi@outlook.com](mailto:biel.carpi@outlook.com))
+
+## Licencia
+Este proyecto está bajo la Licencia BSD 3-Clause, que permite la redistribución y uso con o sin modificación, siempre y cuando se reconozca la autoría del proyecto.
+
+Para más información, revisa la [LICENSE](https://github.com/bielcarpi/j2d-skins-api/blob/main/LICENSE) 
