@@ -14,7 +14,7 @@ const generateToken = (id: string) => {
     const payload = {
         sub: id
     };
-    return jwt.sign(payload, secret, {expiresIn: '1h'});
+    return jwt.sign(payload, secret, {expiresIn: '24h'});
 };
 
 
@@ -22,11 +22,6 @@ export const register = async (req: Request, res: Response) => {
     try {
         // Get user input
         const {username, password} = req.body;
-
-        // Validate user input
-        if (!(username && password)) {
-            return res.status(400).send("All input is required");
-        }
 
         // Check if user already exists
         const oldUser = await User.findOne({username});
@@ -61,11 +56,6 @@ export const login = async (req: Request, res: Response) => {
     try {
         // Get user input
         const {username, password} = req.body;
-
-        // Validate user input
-        if (!(username && password)) {
-            return res.status(400).send("All input is required");
-        }
 
         // Validate if user exist in our database
         const user = await User.findOne({username});
