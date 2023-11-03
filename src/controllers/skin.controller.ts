@@ -5,7 +5,7 @@ import {UserSkin} from "../models/user_skin.model";
 export const getAvailableSkins = async (req: Request, res: Response) => {
     try {
         // Get all skins
-        const skins = await SkinModel.find({});
+        const skins = await SkinModel.find({}).select('-_id -__v');
         res.status(200).json(skins);
     } catch (error) {
         console.log(error);
@@ -59,7 +59,7 @@ export const getMySkins = async (req: Request, res: Response) => {
 
     try {
         // Find the UserSkin by ID and ensure it belongs to the current user
-        const userSkins = await UserSkin.find({user: userName});
+        const userSkins = await UserSkin.find({user: userName}).select('-_id -__v');
 
         // If the user has no skins, return a 404
         if (userSkins.length == 0) {
@@ -91,7 +91,13 @@ export const changeSkinColor = async (req: Request, res: Response) => {
         userSkin.color = newColor;
         await userSkin.save();
 
-        res.status(200).json(userSkin);
+        // Convert the mongoose document to a plain JavaScript object
+        const updatedUserSkin = userSkin.toObject();
+        // Delete _id and __v from the output
+        delete updatedUserSkin._id;
+        delete updatedUserSkin.__v;
+
+        res.status(200).json(updatedUserSkin);
     } catch (error) {
         console.log(error);
         res.status(500).send('An internal error occurred');
@@ -100,13 +106,13 @@ export const changeSkinColor = async (req: Request, res: Response) => {
 
 
 export const deleteSkin = async (req: Request, res: Response) => {
-    const {userSkinId} = req.body;
+    const userSkinId = req.params.id;
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
     const userName = req.user.username;
 
     try {
         // Find the UserSkin by ID and ensure it belongs to the current user
-        const deletedSkin = await UserSkin.findOneAndDelete({skin: +userSkinId, user: userName});
+        const deletedSkin = await UserSkin.findOneAndDelete({skin: +userSkinId, user: userName}).select('-_id -__v');
 
         // If the skin doesn't exist or doesn't belong to the user, return a 404
         if (!deletedSkin) {
@@ -122,10 +128,10 @@ export const deleteSkin = async (req: Request, res: Response) => {
 };
 
 export const getSkin = async (req: Request, res: Response) => {
-    const {skinId} = req.body;
+    const skinId = req.params.id;
 
     try {
-        const skin = await SkinModel.findOne({id: +skinId});
+        const skin = await SkinModel.findOne({id: +skinId}).select('-_id -__v');
         res.status(200).json(skin);
     } catch (error) {
         console.log(error);

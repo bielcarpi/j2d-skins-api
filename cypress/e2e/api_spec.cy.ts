@@ -51,6 +51,7 @@ describe('Skin Management API', () => {
         cy.request({
             method: 'POST',
             url: '/skins/buy',
+            failOnStatusCode: false,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -58,8 +59,13 @@ describe('Skin Management API', () => {
                 skinId: '1',
             },
         }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body).to.be.an('object');
+            if (response.status === 409) {
+                cy.log('User already owns this skin.');
+            } else if (response.status === 201) {
+                expect(response.body).to.be.an('object');
+            } else {
+                throw new Error(`Unexpected status code: ${response.status}`);
+            }
         });
     });
 
@@ -72,7 +78,7 @@ describe('Skin Management API', () => {
             },
         }).then((response) => {
             expect(response.status).to.eq(200);
-            expect(response.body).to.be.an('object');
+            expect(response.body).to.be.an('array');
         });
     });
 
@@ -96,7 +102,7 @@ describe('Skin Management API', () => {
     it('Delete a skin', () => {
         cy.request({
             method: 'DELETE',
-            url: '/delete/1', // Replace 'skinId' with a valid skin ID
+            url: 'skins/delete/1', // Replace 'skinId' with a valid skin ID
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -108,7 +114,7 @@ describe('Skin Management API', () => {
     it('Get a specific skin', () => {
         cy.request({
             method: 'GET',
-            url: '/getskin/3',
+            url: 'skins/getskin/2',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
