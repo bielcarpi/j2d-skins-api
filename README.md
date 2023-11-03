@@ -72,7 +72,7 @@ Docker Compose se encarga de crear un contenedor de MongoDB y vincularlo con el 
 Al desplegar la API, se crea un usuario de prueba (`mongo-init.js`):
 ```json
 {
-  "url": "mongodb://mongo:27017/j2d-skins-api",
+  "url": "mongodb://localhost:27017/j2d-skins-api",
   "username": "admin",
   "password": "admin"
 }
