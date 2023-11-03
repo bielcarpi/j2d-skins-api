@@ -22,7 +22,7 @@ app.use(passport.initialize());
 
 // Routes
 app.use(authRoutes);
-app.use('/skins', passport.authenticate('jwt', {session: false}), skinRoutes);
+app.use(passport.authenticate('jwt', {session: false}), skinRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

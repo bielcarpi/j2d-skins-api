@@ -114,7 +114,7 @@ describe('Skin Management API', () => {
     it('Get a specific skin', () => {
         cy.request({
             method: 'GET',
-            url: 'skins/getskin/2',
+            url: 'skin/getskin/2',
             headers: {
                 Authorization: `Bearer ${token}`,
             },

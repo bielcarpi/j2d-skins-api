@@ -28,7 +28,7 @@ export const register = async (req: Request, res: Response) => {
 
         if (oldUser) {
             // Return a 409 - Conflict (User already exists)
-            return res.status(409).send("User Already Exist. Please Login");
+            return res.status(409).json({message: "User Already Exist. Please Login"});
         }
 
         //Encrypt user password
@@ -44,11 +44,10 @@ export const register = async (req: Request, res: Response) => {
         const token = generateToken(user.id);
 
         // Return new user
-        res.status(201).json({
-            token: token,
-        });
+        res.status(201).json({token: token});
     } catch (err) {
-        res.status(500).send("Error in Saving");
+        console.log(err);
+        res.status(500).json({message: "Error in Saving"});
     }
 }
 
@@ -65,14 +64,13 @@ export const login = async (req: Request, res: Response) => {
             // Create token to send back for authentication
             const token = generateToken(user.id);
 
-            return res.status(200).json({
-                token: token,
-            });
+            return res.status(200).json({token: token,});
         }
 
         //If password is incorrect
-        res.status(400).send("Invalid Credentials");
+        res.status(400).json({message: "Invalid Credentials"});
     } catch (err) {
-        res.status(500).send("Error in Login");
+        console.log(err);
+        res.status(500).json({message: "Error in Saving"});
     }
 };

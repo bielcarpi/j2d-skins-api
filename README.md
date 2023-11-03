@@ -105,37 +105,37 @@ Las dos rutas de autenticación devuelven un token JWT que debe ser incluido en 
 
 
 ### Skins
-* **GET /available:** Lista todas las skins disponibles para compra. Requiere autenticación JWT.
+* **GET /skins/available:** Lista todas las skins disponibles para compra. Requiere autenticación JWT.
  
 <br>
 
-* **POST /buy:** Permite a los usuarios comprar una skin y almacenarla en la base de datos. Requiere autenticación JWT y el skinId en el cuerpo de la petición.
+* **POST /skins/buy:** Permite a los usuarios comprar una skin y almacenarla en la base de datos. Requiere autenticación JWT y el skinId en el cuerpo de la petición.
 
 | Campo    | Tipo     | Descripción                         | Requerido |
 |----------|----------|-------------------------------------|-----------|
-| `skinId` | `string` | Id de la Skin que se quiere comprar | Sí        |
+| `skinId` | `number` | Id de la Skin que se quiere comprar | Sí        |
 
 
 <br>
 
-* **GET /myskins:** Lista todas las skins compradas por el usuario autenticado.
+* **GET /skins/myskins:** Lista todas las skins compradas por el usuario autenticado.
 
 <br>
 
-* **PUT /color:** Permite a los usuarios cambiar el color de una skin que ya han comprado. Requiere autenticación JWT y userSkinId y newColor en el cuerpo de la petición.
+* **PUT /skins/color:** Permite a los usuarios cambiar el color de una skin que ya han comprado. Requiere autenticación JWT y userSkinId y newColor en el cuerpo de la petición.
 
 | Campo        | Tipo     | Descripción                                  | Requerido |
 |--------------|----------|----------------------------------------------|-----------|
-| `userSkinId` | `string` | Id de la skin que se quiere cambiar de color | Sí        |
+| `userSkinId` | `number` | Id de la skin que se quiere cambiar de color | Sí        |
 | `newColor`   | `string` | Nuevo color de la skin                       | Sí        |
 
 <br>
 
-* **DELETE /delete/{id}:** Permite a los usuarios eliminar una skin comprada. Requiere autenticación JWT y id de la skin como parámetro de ruta.
+* **DELETE /skins/delete/{id}:** Permite a los usuarios eliminar una skin comprada. Requiere autenticación JWT y id (`number`) de la skin como parámetro de ruta.
 
 <br>
 
-* **GET /getskin/{id}:** Devuelve la información de una skin específica. Requiere autenticación JWT y id de la skin como parámetro de ruta.
+* **GET /skin/getskin/{id}:** Devuelve la información de una skin específica. Requiere autenticación JWT y id (`number`) de la skin como parámetro de ruta.
 
 
 
