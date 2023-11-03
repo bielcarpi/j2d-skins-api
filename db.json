@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Skin A",
+    "types": ["type1", "type2"],
+    "price": 9.99,
+    "color": "red"
+  },
+  {
+    "id": "2",
+    "name": "Skin B",
+    "types": ["type3", "type4"],
+    "price": 14.99,
+    "color": "blue"
+  }
+]

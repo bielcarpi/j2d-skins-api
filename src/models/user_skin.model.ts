@@ -4,14 +4,14 @@ import mongoose, { Schema, Document } from 'mongoose';
 // The UserSkin model is a list of skins that a user has purchased, and can be customized
 
 interface IUserSkin extends Document {
-    user: mongoose.Types.ObjectId;
-    skin: mongoose.Types.ObjectId;
+    user: string;
+    skin: number;
     color: string; // The customized color of the skin
 }
 
 const userSkinSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    skin: { type: Schema.Types.ObjectId, ref: 'Skin', required: true },
+    user: { type: String, required: true },
+    skin: { type: Number, required: true },
     color: { type: String, required: true }
 });
 

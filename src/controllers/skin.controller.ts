@@ -17,11 +17,11 @@ export const buySkin = async (req: Request, res: Response) => {
     const {skinId} = req.body;
 
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
-    const userId = req.user.id;
+    const userName = req.user.username;
 
     try {
         // Check if the user already owns the skin
-        const alreadyOwnedSkin = await UserSkin.find({skin: skinId, user: userId});
+        const alreadyOwnedSkin = await UserSkin.find({skin: +skinId, user: userName});
 
         // If the user already owns the skin, return a 409 - Conflict
         if (alreadyOwnedSkin.length > 0) {
@@ -29,7 +29,7 @@ export const buySkin = async (req: Request, res: Response) => {
         }
 
         // Check if the skin exists, and get its color
-        const skin = await SkinModel.findById(skinId);
+        const skin = await SkinModel.findOne({id: +skinId});
         const color = skin?.color;
 
         // If the skin doesn't exist, return a 404 - Not Found
@@ -39,8 +39,8 @@ export const buySkin = async (req: Request, res: Response) => {
 
         // Otherwise, create a new UserSkin
         await UserSkin.create({
-            user: userId,
-            skin: skinId,
+            user: userName,
+            skin: +skinId,
             color: color
         });
 
@@ -55,11 +55,11 @@ export const buySkin = async (req: Request, res: Response) => {
 
 export const getMySkins = async (req: Request, res: Response) => {
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
-    const userId = req.user.id;
+    const userName = req.user.username;
 
     try {
         // Find the UserSkin by ID and ensure it belongs to the current user
-        const userSkins = await UserSkin.find({user: userId});
+        const userSkins = await UserSkin.find({user: userName});
 
         // If the user has no skins, return a 404
         if (userSkins.length == 0) {
@@ -77,11 +77,11 @@ export const getMySkins = async (req: Request, res: Response) => {
 export const changeSkinColor = async (req: Request, res: Response) => {
     const {userSkinId, newColor} = req.body;
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
-    const userId = req.user.id;
+    const userName = req.user.username;
 
     try {
         // Find the UserSkin by ID and ensure it belongs to the current user
-        const userSkin = await UserSkin.findOne({_id: userSkinId, user: userId});
+        const userSkin = await UserSkin.findOne({skin: +userSkinId, user: userName});
 
         if (!userSkin) {
             return res.status(404).json({message: "Skin not found or not owned by user."});
@@ -102,11 +102,11 @@ export const changeSkinColor = async (req: Request, res: Response) => {
 export const deleteSkin = async (req: Request, res: Response) => {
     const {userSkinId} = req.body;
     // @ts-ignore (we know req has a user property because we added it in the auth middleware)
-    const userId = req.user.id;
+    const userName = req.user.username;
 
     try {
         // Find the UserSkin by ID and ensure it belongs to the current user
-        const deletedSkin = await UserSkin.findOneAndDelete({_id: userSkinId, user: userId});
+        const deletedSkin = await UserSkin.findOneAndDelete({skin: +userSkinId, user: userName});
 
         // If the skin doesn't exist or doesn't belong to the user, return a 404
         if (!deletedSkin) {
@@ -125,7 +125,7 @@ export const getSkin = async (req: Request, res: Response) => {
     const {skinId} = req.body;
 
     try {
-        const skin = await SkinModel.findById(skinId);
+        const skin = await SkinModel.findOne({id: +skinId});
         res.status(200).json(skin);
     } catch (error) {
         console.log(error);

@@ -24,6 +24,7 @@ WORKDIR /usr/src/app
 # Copy built assets from the builder stage
 COPY --from=builder /usr/src/app/dist ./dist
 COPY package*.json ./
+COPY db.json ./
 
 # Install only production dependencies
 RUN npm install --only=production
