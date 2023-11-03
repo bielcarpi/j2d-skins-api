@@ -9,7 +9,7 @@ export const getAvailableSkins = async (req: Request, res: Response) => {
         res.status(200).json(skins);
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 };
 
@@ -25,7 +25,7 @@ export const buySkin = async (req: Request, res: Response) => {
 
         // If the user already owns the skin, return a 409 - Conflict
         if (alreadyOwnedSkin.length > 0) {
-            return res.status(409).send("User already owns this skin.");
+            return res.status(409).json({message: "User already owns this skin."});
         }
 
         // Check if the skin exists, and get its color
@@ -34,7 +34,7 @@ export const buySkin = async (req: Request, res: Response) => {
 
         // If the skin doesn't exist, return a 404 - Not Found
         if (!color) {
-            return res.status(404).send("Skin not found.");
+            return res.status(404).json({message: "Skin not found."});
         }
 
         // Otherwise, create a new UserSkin
@@ -48,7 +48,7 @@ export const buySkin = async (req: Request, res: Response) => {
         res.status(201).json({message: "Skin purchased successfully."});
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 
 };
@@ -70,7 +70,7 @@ export const getMySkins = async (req: Request, res: Response) => {
         res.status(200).json(userSkins);
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 };
 
@@ -100,7 +100,7 @@ export const changeSkinColor = async (req: Request, res: Response) => {
         res.status(200).json(updatedUserSkin);
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 };
 
@@ -116,14 +116,14 @@ export const deleteSkin = async (req: Request, res: Response) => {
 
         // If the skin doesn't exist or doesn't belong to the user, return a 404
         if (!deletedSkin) {
-            return res.status(404).send('Skin not found');
+            return res.status(404).json({message: 'Skin not found'});
         }
 
         // Otherwise, return a 200 - OK
         res.status(200).json(deletedSkin);
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 };
 
@@ -135,6 +135,6 @@ export const getSkin = async (req: Request, res: Response) => {
         res.status(200).json(skin);
     } catch (error) {
         console.log(error);
-        res.status(500).send('An internal error occurred');
+        res.status(500).json({message: 'An internal error occurred'});
     }
 };
