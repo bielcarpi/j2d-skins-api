@@ -5,6 +5,8 @@ node_modules/
 logs
 *.log
 npm-debug.log*
+cypress/videos
+cypress/screenshots
 
 # Runtime data
 pids

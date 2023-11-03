@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {SkinModel} from "../models/skin.model";
-import {UserSkin} from "../models/userSkin.model";
+import {UserSkin} from "../models/user_skin.model";
 
 export const getAvailableSkins = async (req: Request, res: Response) => {
     try {

@@ -6,7 +6,8 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "noEmitOnError": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["cypress"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

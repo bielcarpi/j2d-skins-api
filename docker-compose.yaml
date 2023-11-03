@@ -21,7 +21,16 @@ services:
     volumes:
       - mongodata:/data/db
       - ./mongo-init:/docker-entrypoint-initdb.d
-
+  cypress:
+    build:
+      context: .
+      dockerfile: Dockerfile.cypress
+    depends_on:
+      - app
+    environment:
+      - CYPRESS_BASE_URL=http://app:3000
+    volumes:
+      - ./:/e2e
 
 volumes:
   mongodata:

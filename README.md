@@ -15,6 +15,10 @@
     <a href="#">
     <img src="https://img.shields.io/badge/Docker-%232496ED.svg?&style=for-the-badge&logo=docker&logoColor=white">
   </a>
+  </a>
+    <a href="#">
+<img src="https://img.shields.io/badge/Cypress-04C38E.svg?&style=for-the-badge&logo=cypress&logoColor=white">
+  </a>
 
 </p>
 <p align="center">
@@ -31,6 +35,13 @@ docker-compose up --build
 
 <br>
 El proyecto se desplegará en el puerto 3000 de tu máquina local, y ya podrás hacer peticiones (asegúrate de incluir los parámetros necesarios en el cuerpo de la petición, y el bearer token en caso de que sea necesario).
+
+
+## Testing
+
+Se ha usado Cypress para realizar tests de la API y comprobar su correcto funcionamiento.
+
+Todos los tests se encuentran en `cypress/api_spec.cy.ts` y se ejecutan automaticamente al construir el proyecto con Docker Compose.
 
 
 ## Modelo de Skin

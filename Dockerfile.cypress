@@ -1,0 +1,15 @@
+# Use the Cypress included image
+FROM cypress/included:13.4.0
+
+WORKDIR /e2e
+
+# Install project dependencies
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
+# Copy test files
+COPY cypress cypress
+COPY . .
+
+CMD ["npx", "cypress", "run"]
